@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b16">
+  <title>Turtle Club MC | Minecraft SMP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #101b16;
+      color: #ffffff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 7%;
+      background: #14231b;
+      border-bottom: 1px solid #294535;
+    }
+
+    .logo {
+      color: #75d99a;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: #d2e5d8;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 110px 20px;
+      background: linear-gradient(135deg, #142b20, #101b16);
+    }
+
+    .tag {
+      color: #75d99a;
+      letter-spacing: 3px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(35px, 8vw, 65px);
+      margin: 22px 0;
+    }
+
+    h1 span {
+      color: #75d99a;
+    }
+
+    .description {
+      color: #b5c9bb;
+      max-width: 500px;
+      margin: 0 auto 30px;
+      line-height: 1.7;
+    }
+
+    .button {
+      display: inline-block;
+      background: #328653;
+      color: white;
+      padding: 15px 27px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .button.secondary {
+      background: #263b2e;
+      border: 1px solid #477957;
+    }
+
+    .section {
+      padding: 65px 7%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .section p {
+      color: #b5c9bb;
+      line-height: 1.7;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .feature {
+      background: #192b20;
+      border: 1px solid #304b39;
+      padding: 28px 18px;
+      border-radius: 12px;
+    }
+
+    .feature h3 {
+      color: #75d99a;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      background: #0b130e;
+      color: #82988a;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      nav a {
+        margin: 0 6px;
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 85px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🐢 TURTLE CLUB MC</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="tag">YOUR NEXT ADVENTURE STARTS HERE</div>
+
+    <h1>WELCOME TO <span>TURTLE CLUB</span></h1>
+
+    <p class="description">
+      Discover a Minecraft experience filled with adventure,
+      custom features, an economy and an amazing community.
+    </p>
+
+    <a href="#about" class="button">Explore Server</a>
+    <a href="#features" class="button secondary">Discover Features</a>
+  </section>
+
+  <section class="section" id="features">
+    <h2>What Awaits You?</h2>
+    <p>Explore everything Turtle Club MC has to offer.</p>
+
+    <div class="features">
+
+      <div class="feature">
+        <h3>⚔️ Adventures</h3>
+        <p>Discover dungeons, bosses and exciting challenges.</p>
+      </div>
+
+      <div class="feature">
+        <h3>💰 Economy</h3>
+        <p>Build your wealth and explore the server economy.</p>
+      </div>
+
+      <div class="feature">
+        <h3>🎣 Custom Features</h3>
+        <p>Experience unique fishing, mining and more.</p>
+      </div>
+
+      <div class="feature">
+        <h3>🌍 Community</h3>
+        <p>Meet other players and create unforgettable adventures.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <h2>Join Turtle Club MC</h2>
+    <p>
+      Your adventure is waiting.
+      Come explore the world of Turtle Club.
+    </p>
+  </section>
+
+  <footer>
+    © 2026 Turtle Club MC. All rights reserved.
+  </footer>
+
+</body>
+</html>
