@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store | Turtle Club MC</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #101b16;
+  color: white;
+}
+
+header {
+  background: #14231b;
+  padding: 22px 6%;
+  border-bottom: 1px solid #294535;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  color: #75d99a;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+nav a {
+  color: #d2e5d8;
+  text-decoration: none;
+  margin-left: 12px;
+  font-size: 14px;
+}
+
+.hero {
+  text-align: center;
+  padding: 65px 20px 35px;
+}
+
+.hero h1 {
+  color: #75d99a;
+  font-size: 38px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: #b5c9bb;
+  line-height: 1.6;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px 6%;
+}
+
+.category {
+  background: #20352a;
+  border: 1px solid #365342;
+  border-radius: 12px;
+  padding: 20px 8px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.category .emoji {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.category:hover {
+  background: #294b35;
+}
+
+.section {
+  padding: 45px 6%;
+  text-align: center;
+}
+
+.section h2 {
+  color: #75d99a;
+  font-size: 29px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #b5c9bb;
+  margin-bottom: 25px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.product {
+  background: #192b20;
+  border: 1px solid #365342;
+  border-radius: 12px;
+  padding: 25px 15px;
+}
+
+.product h3 {
+  font-size: 21px;
+  margin: 10px 0;
+}
+
+.product .emoji {
+  font-size: 32px;
+}
+
+.price {
+  color: #75d99a;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.note {
+  color: #a9bdb0;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.coming {
+  color: #75d99a;
+  padding: 35px;
+  border: 1px dashed #477957;
+  border-radius: 12px;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 25px;
+  color: #75d99a;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 28px;
+  background: #0b130e;
+  color: #82988a;
+  font-size: 13px;
+}
+
+@media(max-width: 400px) {
+  .categories {
+    gap: 7px;
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+  .category {
+    font-size: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🐢 TURTLE CLUB MC</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="store.html">Store</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>OFFICIAL STORE</h1>
+  <p>Upgrade your adventure. Choose your category!</p>
+</div>
+
+<div class="categories">
+  <a href="#ranks" class="category">
+    <span class="emoji">🏆</span>
+    Ranks
+  </a>
+
+  <a href="#scutes" class="category">
+    <span class="emoji">🐢</span>
+    Scutes
+  </a>
+
+  <a href="#keys" class="category">
+    <span class="emoji">🔑</span>
+    Keys
+  </a>
+</div>
+
+<section class="section" id="ranks">
+  <h2>🏆 Ranks</h2>
+  <p class="subtitle">Choose your rank!</p>
+
+  <div class="products">
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>Turtle Master</h3>
+      <div class="price">$55</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🛡️</div>
+      <h3>Guardian</h3>
+      <div class="price">$40</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐬</div>
+      <h3>Dolphin</h3>
+      <div class="price">$25</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🦑</div>
+      <h3>Squid</h3>
+      <div class="price">$10</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="scutes">
+  <h2>🐢 Scutes</h2>
+  <p class="subtitle">Get Scutes for your adventures!</p>
+
+  <div class="products">
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>1,000 Scutes</h3>
+      <div class="price">$7</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>2,200 Scutes</h3>
+      <div class="price">$14</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>4,400 Scutes</h3>
+      <div class="price">$30</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>8,800 Scutes</h3>
+      <div class="price">$55</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="keys">
+  <h2>🔑 Keys</h2>
+  <p class="subtitle">Discover our available crate keys.</p>
+
+  <div class="coming">
+    <h3>Coming Soon!</h3>
+    <p>Our keys selection is being prepared.</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Turtle Club MC. All rights reserved.
+</footer>
+
+</body>
+</html>
