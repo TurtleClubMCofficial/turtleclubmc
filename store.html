@@ -1,0 +1,854 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store | Turtle Club MC</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #101b16;
+  color: white;
+}
+
+header {
+  background: #14231b;
+  padding: 22px 6%;
+  border-bottom: 1px solid #294535;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  color: #75d99a;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  color: #d2e5d8;
+  text-decoration: none;
+  margin-left: 12px;
+  font-size: 14px;
+}
+
+.basket-button {
+  background: #294b35;
+  border: 1px solid #477957;
+  color: white;
+  border-radius: 9px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.basket-button:hover,
+.add-button:hover {
+  background: #386b49;
+}
+
+.basket-count {
+  background: #75d99a;
+  color: #101b16;
+  border-radius: 20px;
+  padding: 2px 7px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.hero {
+  text-align: center;
+  padding: 65px 20px 35px;
+}
+
+.hero h1 {
+  color: #75d99a;
+  font-size: 38px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: #b5c9bb;
+  line-height: 1.6;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px 6%;
+}
+
+.category {
+  background: #20352a;
+  border: 1px solid #365342;
+  border-radius: 12px;
+  padding: 20px 8px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.category .emoji {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.category:hover {
+  background: #294b35;
+}
+
+.section {
+  padding: 45px 6%;
+  text-align: center;
+}
+
+.section h2 {
+  color: #75d99a;
+  font-size: 29px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #b5c9bb;
+  margin-bottom: 25px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.product {
+  background: #192b20;
+  border: 1px solid #365342;
+  border-radius: 12px;
+  padding: 25px 15px;
+}
+
+.product h3 {
+  font-size: 21px;
+  margin: 10px 0;
+}
+
+.product .emoji {
+  font-size: 32px;
+}
+
+.price {
+  color: #75d99a;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.note {
+  color: #a9bdb0;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.add-button {
+  background: #294b35;
+  border: 1px solid #477957;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 8px;
+  margin-top: 18px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.add-button.added {
+  background: #75d99a;
+  color: #101b16;
+}
+
+.coming {
+  color: #75d99a;
+  padding: 35px;
+  border: 1px dashed #477957;
+  border-radius: 12px;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 25px;
+  color: #75d99a;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 28px;
+  background: #0b130e;
+  color: #82988a;
+  font-size: 13px;
+}
+
+/* Basket menu */
+
+.basket-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 20;
+}
+
+.basket-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(400px, 90%);
+  height: 100%;
+  background: #14231b;
+  border-left: 1px solid #365342;
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  transform: translateX(105%);
+  transition: transform 0.25s ease;
+}
+
+.basket-drawer.open {
+  transform: translateX(0);
+}
+
+.basket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #365342;
+  padding-bottom: 18px;
+}
+
+.basket-top h2 {
+  color: #75d99a;
+}
+
+.close-basket {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.basket-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 0;
+}
+
+.empty-basket {
+  color: #a9bdb0;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.basket-item {
+  background: #20352a;
+  border: 1px solid #365342;
+  border-radius: 9px;
+  padding: 13px;
+  margin-bottom: 12px;
+}
+
+.basket-item-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.basket-item h3 {
+  font-size: 16px;
+}
+
+.basket-item-price {
+  color: #75d99a;
+  margin-top: 5px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.quantity-controls button {
+  background: #294b35;
+  color: white;
+  border: 1px solid #477957;
+  border-radius: 5px;
+  padding: 5px 11px;
+  cursor: pointer;
+}
+
+.remove-item {
+  background: none;
+  border: none;
+  color: #ff9999;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.basket-bottom {
+  border-top: 1px solid #365342;
+  padding-top: 18px;
+}
+
+.basket-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 19px;
+  margin-bottom: 16px;
+}
+
+.basket-total strong {
+  color: #75d99a;
+}
+
+.checkout-button {
+  width: 100%;
+  padding: 15px;
+  background: #75d99a;
+  color: #101b16;
+  border: none;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkout-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.basket-message {
+  color: #ffb0a0;
+  font-size: 13px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media(max-width: 500px) {
+  header {
+    padding: 18px 4%;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .categories {
+    gap: 7px;
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
+  .category {
+    font-size: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🐢 TURTLE CLUB MC</div>
+
+  <div class="header-right">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+    </nav>
+
+    <button class="basket-button" id="openBasket">
+      🛒 Basket <span class="basket-count" id="basketCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>OFFICIAL STORE</h1>
+  <p>Upgrade your adventure. Choose your category!</p>
+</div>
+
+<div class="categories">
+  <a href="#ranks" class="category">
+    <span class="emoji">🏆</span>
+    Ranks
+  </a>
+
+  <a href="#scutes" class="category">
+    <span class="emoji">🐢</span>
+    Scutes
+  </a>
+
+  <a href="#cosmetics" class="category">
+    <span class="emoji">👒</span>
+    Cosmetics
+  </a>
+
+  <a href="#keys" class="category">
+    <span class="emoji">🔑</span>
+    Keys
+  </a>
+</div>
+
+<section class="section" id="ranks">
+  <h2>🏆 Ranks</h2>
+  <p class="subtitle">Choose your rank!</p>
+
+  <div class="products">
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>Turtle Master</h3>
+      <div class="price">$55</div>
+      <button class="add-button"
+        data-id="7781018"
+        data-name="Turtle Master"
+        data-price="55">
+        🛒 Add to Basket
+      </button>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🛡️</div>
+      <h3>Guardian</h3>
+      <div class="price">$40</div>
+      <button class="add-button"
+        data-id="7781444"
+        data-name="Guardian"
+        data-price="40">
+        🛒 Add to Basket
+      </button>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐬</div>
+      <h3>Dolphin</h3>
+      <div class="price">$25</div>
+      <button class="add-button"
+        data-id="7781447"
+        data-name="Dolphin"
+        data-price="25">
+        🛒 Add to Basket
+      </button>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🦑</div>
+      <h3>Squid</h3>
+      <div class="price">$10</div>
+      <button class="add-button"
+        data-id="7781450"
+        data-name="Squid"
+        data-price="10">
+        🛒 Add to Basket
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="scutes">
+  <h2>🐢 Scutes</h2>
+  <p class="subtitle">Get Scutes for your adventures!</p>
+
+  <div class="products">
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>1,000 Scutes</h3>
+      <div class="price">$7</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>2,200 Scutes</h3>
+      <div class="price">$14</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>4,400 Scutes</h3>
+      <div class="price">$30</div>
+    </div>
+
+    <div class="product">
+      <div class="emoji">🐢</div>
+      <h3>8,800 Scutes</h3>
+      <div class="price">$55</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cosmetics">
+  <h2>👒 Cosmetics</h2>
+  <p class="subtitle">Discover our available cosmetics.</p>
+
+  <div class="coming">
+    <h3>Coming Soon!</h3>
+    <p>Our Cosmetics selection is being prepared.</p>
+  </div>
+</section>
+
+<section class="section" id="keys">
+  <h2>🔑 Keys</h2>
+  <p class="subtitle">Discover our available crate keys.</p>
+
+  <div class="coming">
+    <h3>Coming Soon!</h3>
+    <p>Our keys selection is being prepared.</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Turtle Club MC. All rights reserved.
+</footer>
+
+<!-- Basket background -->
+<div class="basket-overlay" id="basketOverlay" hidden></div>
+
+<!-- Basket menu -->
+<aside class="basket-drawer" id="basketDrawer"
+  aria-label="Shopping basket" aria-hidden="true">
+
+  <div class="basket-top">
+    <h2>🛒 Your Basket</h2>
+    <button class="close-basket" id="closeBasket"
+      aria-label="Close basket">×</button>
+  </div>
+
+  <div class="basket-items" id="basketItems">
+    <p class="empty-basket">Your basket is empty.</p>
+  </div>
+
+  <div class="basket-bottom">
+    <div class="basket-total">
+      <span>Total</span>
+      <strong id="basketTotal">$0.00</strong>
+    </div>
+
+    <button class="checkout-button" id="checkoutButton" disabled>
+      Continue to Checkout
+    </button>
+
+    <p class="basket-message" id="basketMessage"></p>
+  </div>
+</aside>
+
+<script>
+/* Paste your Tebex PUBLIC TOKEN between the quotes below */
+const TEBEX_PUBLIC_TOKEN = "PASTE_YOUR_PUBLIC_TOKEN_HERE";
+
+const API_BASE =
+  "https://headless.tebex.io/api/accounts/" +
+  encodeURIComponent(TEBEX_PUBLIC_TOKEN);
+
+const STORAGE_KEY = "turtleClubRankBasket";
+
+let basket = {};
+
+try {
+  basket = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+} catch {
+  basket = {};
+}
+
+const basketDrawer = document.getElementById("basketDrawer");
+const basketOverlay = document.getElementById("basketOverlay");
+const basketItems = document.getElementById("basketItems");
+const basketCount = document.getElementById("basketCount");
+const basketTotal = document.getElementById("basketTotal");
+const checkoutButton = document.getElementById("checkoutButton");
+const basketMessage = document.getElementById("basketMessage");
+
+function saveBasket() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(basket));
+  renderBasket();
+}
+
+function openBasket() {
+  basketDrawer.classList.add("open");
+  basketOverlay.hidden = false;
+  basketDrawer.setAttribute("aria-hidden", "false");
+}
+
+function closeBasket() {
+  basketDrawer.classList.remove("open");
+  basketOverlay.hidden = true;
+  basketDrawer.setAttribute("aria-hidden", "true");
+}
+
+document.getElementById("openBasket").addEventListener("click", openBasket);
+document.getElementById("closeBasket").addEventListener("click", closeBasket);
+basketOverlay.addEventListener("click", closeBasket);
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") closeBasket();
+});
+
+function addToBasket(id, name, price) {
+  if (basket[id]) {
+    basket[id].quantity += 1;
+  } else {
+    basket[id] = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: 1
+    };
+  }
+
+  basketMessage.textContent = "";
+  saveBasket();
+}
+
+function changeQuantity(id, amount) {
+  if (!basket[id]) return;
+
+  basket[id].quantity += amount;
+
+  if (basket[id].quantity <= 0) {
+    delete basket[id];
+  }
+
+  saveBasket();
+}
+
+function removeItem(id) {
+  delete basket[id];
+  saveBasket();
+}
+
+function renderBasket() {
+  basketItems.innerHTML = "";
+
+  const items = Object.values(basket);
+  const totalCount = items.reduce(
+    (sum, item) => sum + item.quantity, 0
+  );
+
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+
+  basketCount.textContent = totalCount;
+  basketTotal.textContent = "$" + total.toFixed(2);
+  checkoutButton.disabled = items.length === 0;
+
+  if (items.length === 0) {
+    basketItems.innerHTML =
+      '<p class="empty-basket">Your basket is empty.</p>';
+    return;
+  }
+
+  items.forEach(function(item) {
+    const card = document.createElement("div");
+    card.className = "basket-item";
+
+    const top = document.createElement("div");
+    top.className = "basket-item-top";
+
+    const details = document.createElement("div");
+
+    const name = document.createElement("h3");
+    name.textContent = item.name;
+
+    const price = document.createElement("p");
+    price.className = "basket-item-price";
+    price.textContent = "$" + item.price.toFixed(2);
+
+    details.appendChild(name);
+    details.appendChild(price);
+    top.appendChild(details);
+
+    const controls = document.createElement("div");
+    controls.className = "quantity-controls";
+
+    const minus = document.createElement("button");
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "Decrease quantity");
+    minus.addEventListener("click", () =>
+      changeQuantity(item.id, -1)
+    );
+
+    const quantity = document.createElement("span");
+    quantity.textContent = item.quantity;
+
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "Increase quantity");
+    plus.addEventListener("click", () =>
+      changeQuantity(item.id, 1)
+    );
+
+    const remove = document.createElement("button");
+    remove.className = "remove-item";
+    remove.textContent = "Remove";
+    remove.addEventListener("click", () =>
+      removeItem(item.id)
+    );
+
+    controls.appendChild(minus);
+    controls.appendChild(quantity);
+    controls.appendChild(plus);
+    controls.appendChild(remove);
+
+    card.appendChild(top);
+    card.appendChild(controls);
+    basketItems.appendChild(card);
+  });
+}
+
+document.querySelectorAll(".add-button").forEach(function(button) {
+  button.addEventListener("click", function() {
+    addToBasket(
+      button.dataset.id,
+      button.dataset.name,
+      Number(button.dataset.price)
+    );
+
+    const originalText = "🛒 Add to Basket";
+    button.textContent = "✓ Added!";
+    button.classList.add("added");
+
+    setTimeout(function() {
+      button.textContent = originalText;
+      button.classList.remove("added");
+    }, 1100);
+  });
+});
+
+async function checkout() {
+  const items = Object.values(basket);
+
+  if (items.length === 0) return;
+
+  if (
+    !TEBEX_PUBLIC_TOKEN ||
+    TEBEX_PUBLIC_TOKEN === "PASTE_YOUR_PUBLIC_TOKEN_HERE"
+  ) {
+    basketMessage.textContent =
+      "The Tebex public token has not been added yet.";
+    return;
+  }
+
+  checkoutButton.disabled = true;
+  checkoutButton.textContent = "Preparing checkout...";
+  basketMessage.textContent = "";
+
+  try {
+    const createResponse = await fetch(API_BASE + "/baskets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        complete_url: window.location.href,
+        cancel_url: window.location.href
+      })
+    });
+
+    const createData = await createResponse.json();
+
+    if (!createResponse.ok || !createData.data?.ident) {
+      throw new Error(
+        createData.detail || "Could not create your Tebex basket."
+      );
+    }
+
+    const basketIdent = createData.data.ident;
+
+    for (const item of items) {
+      const addResponse = await fetch(
+        "https://headless.tebex.io/api/baskets/" +
+        encodeURIComponent(basketIdent) + "/packages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            package_id: item.id,
+            quantity: item.quantity
+          })
+        }
+      );
+
+      const addData = await addResponse.json();
+
+      if (!addResponse.ok) {
+        throw new Error(
+          addData.detail ||
+          "Could not add " + item.name + " to Tebex."
+        );
+      }
+    }
+
+    const basketResponse = await fetch(
+      API_BASE + "/baskets/" + encodeURIComponent(basketIdent)
+    );
+
+    const finalData = await basketResponse.json();
+
+    if (!basketResponse.ok || !finalData.data?.links?.checkout) {
+      throw new Error("Tebex did not return a checkout link.");
+    }
+
+    window.location.href = finalData.data.links.checkout;
+
+  } catch (error) {
+    console.error("Tebex checkout error:", error);
+
+    const message = error && error.message ? error.message : String(error);
+    basketMessage.textContent =
+      message === "Load failed" || message === "Failed to fetch"
+        ? "Could not connect to Tebex. Please check your connection and try again. If this keeps happening, the browser may be blocking the Tebex request."
+        : message;
+
+    checkoutButton.disabled = false;
+    checkoutButton.textContent = "Continue to Checkout";
+  }
+}
+
+checkoutButton.addEventListener("click", checkout);
+
+renderBasket();
+</script>
+
+</body>
+</html>
