@@ -829,9 +829,15 @@ async function checkout() {
 
     window.location.href = finalData.data.links.checkout;
 
-  } catch (error) {
-    basketMessage.textContent =
-      error.message || "Something went wrong. Please try again.";
+ } catch (error) {
+  console.error("Tebex checkout error:", error);
+
+  basketMessage.textContent =
+    "Tebex error: " + error.message;
+
+  checkoutButton.disabled = false;
+  checkoutButton.textContent = "Continue to Checkout";
+}
 
     checkoutButton.disabled = false;
     checkoutButton.textContent = "Continue to Checkout";
