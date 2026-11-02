@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,6 +153,40 @@ nav a {
   font-size: 32px;
 }
 
+/* Rank descriptions */
+.rank-description {
+  text-align: left;
+  color: #c4d7ca;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 14px 0;
+}
+
+.rank-description h4 {
+  color: #75d99a;
+  font-size: 14px;
+  margin: 12px 0 5px;
+}
+
+.rank-description ul {
+  list-style: none;
+  padding: 0;
+}
+
+.rank-description li {
+  margin: 3px 0;
+}
+
+.rank-description li::before {
+  content: "✓ ";
+  color: #75d99a;
+  font-weight: bold;
+}
+
+.rank-description code {
+  color: #75d99a;
+}
+
 .price {
   color: #75d99a;
   font-size: 25px;
@@ -207,7 +240,6 @@ footer {
 }
 
 /* Basket menu */
-
 .basket-overlay {
   position: fixed;
   inset: 0;
@@ -425,16 +457,51 @@ footer {
   </a>
 </div>
 
+<!-- RANKS -->
 <section class="section" id="ranks">
   <h2>🏆 Ranks</h2>
   <p class="subtitle">Choose your rank!</p>
 
   <div class="products">
 
+    <!-- TURTLE MASTER -->
     <div class="product">
       <div class="emoji">🐢</div>
       <h3>Turtle Master</h3>
+
+      <div class="rank-description">
+        <p><strong>Master the seas</strong> with the ultimate rank!</p>
+
+        <h4>Storage &amp; Convenience</h4>
+        <ul>
+          <li>Infinite fly time</li>
+          <li>12 set homes</li>
+          <li>20 Auction House listings</li>
+          <li>15 player vaults</li>
+          <li>8 player warps</li>
+          <li>120 chest shops</li>
+        </ul>
+
+        <h4>Exclusive Commands</h4>
+        <ul>
+          <li><code>/smelt</code></li>
+          <li><code>/craft</code></li>
+          <li><code>/ptime</code></li>
+          <li><code>/anvil</code></li>
+          <li><code>/feed</code></li>
+          <li><code>/repair</code></li>
+          <li><code>/near</code></li>
+          <li><code>/enderchest</code></li>
+          <li><code>/nick</code></li>
+          <li><code>/heal</code></li>
+          <li><code>/glow</code></li>
+        </ul>
+
+        <p><strong>Bonus:</strong> 5 Seaweed Crate Keys</p>
+      </div>
+
       <div class="price">$55</div>
+
       <button class="add-button"
         data-id="7781018"
         data-name="Turtle Master"
@@ -443,10 +510,40 @@ footer {
       </button>
     </div>
 
+    <!-- GUARDIAN -->
     <div class="product">
       <div class="emoji">🛡️</div>
       <h3>Guardian</h3>
+
+      <div class="rank-description">
+        <p><strong>Stand guard</strong> with powerful perks for your adventure!</p>
+
+        <h4>Storage &amp; Convenience</h4>
+        <ul>
+          <li>10 set homes</li>
+          <li>16 Auction House listings</li>
+          <li>10 player vaults</li>
+          <li>6 player warps</li>
+          <li>80 chest shops</li>
+        </ul>
+
+        <h4>Exclusive Commands</h4>
+        <ul>
+          <li><code>/craft</code></li>
+          <li><code>/glow</code></li>
+          <li><code>/anvil</code></li>
+          <li><code>/ptime</code></li>
+          <li><code>/nick</code></li>
+          <li><code>/heal</code></li>
+          <li><code>/near</code></li>
+          <li><code>/ec</code></li>
+        </ul>
+
+        <p><strong>Bonus:</strong> 3 Seaweed Crate Keys</p>
+      </div>
+
       <div class="price">$40</div>
+
       <button class="add-button"
         data-id="7781444"
         data-name="Guardian"
@@ -455,10 +552,37 @@ footer {
       </button>
     </div>
 
+    <!-- DOLPHIN -->
     <div class="product">
       <div class="emoji">🐬</div>
       <h3>Dolphin</h3>
+
+      <div class="rank-description">
+        <p><strong>Make a splash</strong> with handy survival upgrades!</p>
+
+        <h4>Storage &amp; Convenience</h4>
+        <ul>
+          <li>8 set homes</li>
+          <li>14 Auction House listings</li>
+          <li>8 player vaults</li>
+          <li>60 chest shops</li>
+        </ul>
+
+        <h4>Exclusive Commands</h4>
+        <ul>
+          <li><code>/craft</code></li>
+          <li><code>/ptime</code></li>
+          <li><code>/feed</code></li>
+          <li><code>/glow</code></li>
+          <li><code>/heal</code></li>
+          <li><code>/ec</code></li>
+        </ul>
+
+        <p><strong>Bonus:</strong> 1 Seaweed Crate Key</p>
+      </div>
+
       <div class="price">$25</div>
+
       <button class="add-button"
         data-id="7781447"
         data-name="Dolphin"
@@ -467,10 +591,33 @@ footer {
       </button>
     </div>
 
+    <!-- SQUID -->
     <div class="product">
       <div class="emoji">🦑</div>
       <h3>Squid</h3>
+
+      <div class="rank-description">
+        <p><strong>Dive into survival</strong> with useful everyday perks!</p>
+
+        <h4>Storage &amp; Convenience</h4>
+        <ul>
+          <li>5 set homes</li>
+          <li>12 Auction House listings</li>
+          <li>4 player vaults</li>
+          <li>40 chest shops</li>
+        </ul>
+
+        <h4>Exclusive Commands</h4>
+        <ul>
+          <li><code>/craft</code></li>
+          <li><code>/feed</code></li>
+          <li><code>/heal</code></li>
+          <li><code>/ec</code></li>
+        </ul>
+      </div>
+
       <div class="price">$10</div>
+
       <button class="add-button"
         data-id="7781450"
         data-name="Squid"
@@ -482,6 +629,7 @@ footer {
   </div>
 </section>
 
+<!-- SCUTES -->
 <section class="section" id="scutes">
   <h2>🐢 Scutes</h2>
   <p class="subtitle">Get Scutes for your adventures!</p>
@@ -513,6 +661,7 @@ footer {
   </div>
 </section>
 
+<!-- COSMETICS -->
 <section class="section" id="cosmetics">
   <h2>👒 Cosmetics</h2>
   <p class="subtitle">Discover our available cosmetics.</p>
@@ -523,6 +672,7 @@ footer {
   </div>
 </section>
 
+<!-- KEYS -->
 <section class="section" id="keys">
   <h2>🔑 Keys</h2>
   <p class="subtitle">Discover our available crate keys.</p>
@@ -569,7 +719,7 @@ footer {
 </aside>
 
 <script>
-/* Paste your Tebex PUBLIC TOKEN between the quotes below */
+/* Your Tebex public token */
 const TEBEX_PUBLIC_TOKEN = "155rr-cd5003a37445905713a65fc88300eaa93a66cffc";
 
 const API_BASE =
@@ -611,8 +761,12 @@ function closeBasket() {
   basketDrawer.setAttribute("aria-hidden", "true");
 }
 
-document.getElementById("openBasket").addEventListener("click", openBasket);
-document.getElementById("closeBasket").addEventListener("click", closeBasket);
+document.getElementById("openBasket")
+  .addEventListener("click", openBasket);
+
+document.getElementById("closeBasket")
+  .addEventListener("click", closeBasket);
+
 basketOverlay.addEventListener("click", closeBasket);
 
 document.addEventListener("keydown", function(event) {
@@ -656,6 +810,7 @@ function renderBasket() {
   basketItems.innerHTML = "";
 
   const items = Object.values(basket);
+
   const totalCount = items.reduce(
     (sum, item) => sum + item.quantity, 0
   );
@@ -834,7 +989,10 @@ async function checkout() {
   } catch (error) {
     console.error("Tebex checkout error:", error);
 
-    const message = error && error.message ? error.message : String(error);
+    const message = error && error.message
+      ? error.message
+      : String(error);
+
     basketMessage.textContent =
       message === "Load failed" || message === "Failed to fetch"
         ? "Could not connect to Tebex. Please check your connection and try again. If this keeps happening, the browser may be blocking the Tebex request."
