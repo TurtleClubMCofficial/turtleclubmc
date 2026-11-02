@@ -48,13 +48,17 @@ nav a {
   font-size: 14px;
 }
 
-.basket-button {
+.basket-button,
+.add-button {
   background: #294b35;
   border: 1px solid #477957;
   color: white;
   border-radius: 9px;
-  padding: 10px 14px;
   cursor: pointer;
+}
+
+.basket-button {
+  padding: 10px 14px;
   font-size: 16px;
 }
 
@@ -83,14 +87,15 @@ nav a {
   margin-bottom: 15px;
 }
 
-.hero p {
+.hero p,
+.subtitle {
   color: #b5c9bb;
   line-height: 1.6;
 }
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   padding: 20px 6%;
 }
@@ -127,7 +132,6 @@ nav a {
 }
 
 .subtitle {
-  color: #b5c9bb;
   margin-bottom: 25px;
 }
 
@@ -153,7 +157,6 @@ nav a {
   font-size: 32px;
 }
 
-/* Rank descriptions */
 .rank-description {
   text-align: left;
   color: #c4d7ca;
@@ -170,7 +173,6 @@ nav a {
 
 .rank-description ul {
   list-style: none;
-  padding: 0;
 }
 
 .rank-description li {
@@ -194,20 +196,9 @@ nav a {
   margin-top: 12px;
 }
 
-.note {
-  color: #a9bdb0;
-  font-size: 13px;
-  margin-top: 10px;
-}
-
 .add-button {
-  background: #294b35;
-  border: 1px solid #477957;
-  color: white;
   padding: 11px 18px;
-  border-radius: 8px;
   margin-top: 18px;
-  cursor: pointer;
   font-size: 14px;
   font-weight: bold;
 }
@@ -224,13 +215,6 @@ nav a {
   border-radius: 12px;
 }
 
-.back {
-  display: inline-block;
-  margin-top: 25px;
-  color: #75d99a;
-  text-decoration: none;
-}
-
 footer {
   text-align: center;
   padding: 28px;
@@ -239,11 +223,94 @@ footer {
   font-size: 13px;
 }
 
-/* Basket menu */
+/* Username popup */
+.username-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.username-modal {
+  width: min(440px, 100%);
+  padding: 28px;
+  border: 1px solid #477957;
+  border-radius: 16px;
+  background: #14231b;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+}
+
+.username-modal h2 {
+  color: #75d99a;
+  margin-bottom: 12px;
+}
+
+.username-modal p {
+  color: #c4d7ca;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.username-modal label {
+  display: block;
+  color: #d2e5d8;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.username-modal input {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  background: #0f1a13;
+  border: 1px solid #477957;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.username-modal input:focus {
+  outline: 2px solid #75d99a;
+}
+
+.username-error {
+  min-height: 18px;
+  margin: 8px 0 12px !important;
+  color: #ffb0a0 !important;
+  font-size: 13px !important;
+}
+
+.username-save {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #75d99a;
+  color: #101b16;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.username-save:hover {
+  background: #91e7ad;
+}
+
+.username-small-note {
+  margin: 12px 0 0 !important;
+  color: #9eb4a4 !important;
+  font-size: 12px !important;
+}
+
+/* Basket drawer */
 .basket-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.65);
   z-index: 20;
 }
 
@@ -390,7 +457,7 @@ footer {
   display: none !important;
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
   header {
     padding: 18px 4%;
   }
@@ -401,19 +468,61 @@ footer {
   }
 
   .categories {
+    grid-template-columns: repeat(2, 1fr);
     gap: 7px;
     padding-left: 3%;
     padding-right: 3%;
-  }
-
-  .category {
-    font-size: 13px;
   }
 }
 </style>
 </head>
 
 <body>
+
+<!-- Minecraft username popup -->
+<div class="username-overlay" id="usernameOverlay">
+  <div class="username-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="usernameTitle">
+
+    <h2 id="usernameTitle">🐢 Welcome to Turtle Club MC!</h2>
+
+    <p>
+      Enter your Minecraft Java Edition username before shopping.
+      Make sure it matches the account you intend to purchase for. 
+    </p>
+
+    <form id="usernameForm">
+      <label for="minecraftUsername">Minecraft Username</label>
+
+      <input
+        type="text"
+        id="minecraftUsername"
+        name="minecraftUsername"
+        placeholder="Enter your username"
+        minlength="3"
+        maxlength="16"
+        pattern="[A-Za-z0-9_]{3,16}"
+        autocomplete="off"
+        required
+      >
+
+      <p class="username-error"
+         id="usernameError"
+         aria-live="polite"></p>
+
+      <button type="submit" class="username-save">
+        Continue to Store
+      </button>
+    </form>
+
+    <p class="username-small-note">
+      Your username is remembered in this browser. This popup does not
+      independently verify your Minecraft account.
+    </p>
+  </div>
+</div>
 
 <header>
   <div class="logo">🐢 TURTLE CLUB MC</div>
@@ -437,23 +546,16 @@ footer {
 
 <div class="categories">
   <a href="#ranks" class="category">
-    <span class="emoji">🏆</span>
-    Ranks
+    <span class="emoji">🏆</span>Ranks
   </a>
-
   <a href="#scutes" class="category">
-    <span class="emoji">🐢</span>
-    Scutes
+    <span class="emoji">🐢</span>Scutes
   </a>
-
   <a href="#cosmetics" class="category">
-    <span class="emoji">👒</span>
-    Cosmetics
+    <span class="emoji">👒</span>Cosmetics
   </a>
-
   <a href="#keys" class="category">
-    <span class="emoji">🔑</span>
-    Keys
+    <span class="emoji">🔑</span>Keys
   </a>
 </div>
 
@@ -464,13 +566,11 @@ footer {
 
   <div class="products">
 
-    <!-- TURTLE MASTER -->
     <div class="product">
       <div class="emoji">🐢</div>
       <h3>Turtle Master</h3>
 
       <div class="rank-description">
-
         <h4>Storage &amp; Convenience</h4>
         <ul>
           <li>Infinite fly time</li>
@@ -500,22 +600,17 @@ footer {
       </div>
 
       <div class="price">$55</div>
-
       <button class="add-button"
         data-id="7781018"
         data-name="Turtle Master"
-        data-price="55">
-        🛒 Add to Basket
-      </button>
+        data-price="55">🛒 Add to Basket</button>
     </div>
 
-    <!-- GUARDIAN -->
     <div class="product">
       <div class="emoji">🛡️</div>
       <h3>Guardian</h3>
 
       <div class="rank-description">
-
         <h4>Storage &amp; Convenience</h4>
         <ul>
           <li>10 set homes</li>
@@ -541,22 +636,17 @@ footer {
       </div>
 
       <div class="price">$40</div>
-
       <button class="add-button"
         data-id="7781444"
         data-name="Guardian"
-        data-price="40">
-        🛒 Add to Basket
-      </button>
+        data-price="40">🛒 Add to Basket</button>
     </div>
 
-    <!-- DOLPHIN -->
     <div class="product">
       <div class="emoji">🐬</div>
       <h3>Dolphin</h3>
 
       <div class="rank-description">
-
         <h4>Storage &amp; Convenience</h4>
         <ul>
           <li>8 set homes</li>
@@ -579,22 +669,17 @@ footer {
       </div>
 
       <div class="price">$25</div>
-
       <button class="add-button"
         data-id="7781447"
         data-name="Dolphin"
-        data-price="25">
-        🛒 Add to Basket
-      </button>
+        data-price="25">🛒 Add to Basket</button>
     </div>
 
-    <!-- SQUID -->
     <div class="product">
       <div class="emoji">🦑</div>
       <h3>Squid</h3>
 
       <div class="rank-description">
-
         <h4>Storage &amp; Convenience</h4>
         <ul>
           <li>5 set homes</li>
@@ -613,13 +698,10 @@ footer {
       </div>
 
       <div class="price">$10</div>
-
       <button class="add-button"
         data-id="7781450"
         data-name="Squid"
-        data-price="10">
-        🛒 Add to Basket
-      </button>
+        data-price="10">🛒 Add to Basket</button>
     </div>
 
   </div>
@@ -661,7 +743,6 @@ footer {
 <section class="section" id="cosmetics">
   <h2>👒 Cosmetics</h2>
   <p class="subtitle">Discover our available cosmetics.</p>
-
   <div class="coming">
     <h3>Coming Soon!</h3>
     <p>Our Cosmetics selection is being prepared.</p>
@@ -672,7 +753,6 @@ footer {
 <section class="section" id="keys">
   <h2>🔑 Keys</h2>
   <p class="subtitle">Discover our available crate keys.</p>
-
   <div class="coming">
     <h3>Coming Soon!</h3>
     <p>Our keys selection is being prepared.</p>
@@ -686,7 +766,7 @@ footer {
 <!-- Basket background -->
 <div class="basket-overlay" id="basketOverlay" hidden></div>
 
-<!-- Basket menu -->
+<!-- Basket drawer -->
 <aside class="basket-drawer" id="basketDrawer"
   aria-label="Shopping basket" aria-hidden="true">
 
@@ -715,15 +795,56 @@ footer {
 </aside>
 
 <script>
-/* Your Tebex public token */
-const TEBEX_PUBLIC_TOKEN = "155rr-cd5003a37445905713a65fc88300eaa93a66cffc";
+/*
+ * IMPORTANT:
+ * Set this to your actual Tebex public token.
+ * Never put a Tebex secret key in website JavaScript.
+ */
+const TEBEX_PUBLIC_TOKEN = "cd5003a37445905713a65fc88300eaa93a66cffc";
 
 const API_BASE =
   "https://headless.tebex.io/api/accounts/" +
   encodeURIComponent(TEBEX_PUBLIC_TOKEN);
 
 const STORAGE_KEY = "turtleClubRankBasket";
+const USERNAME_STORAGE_KEY = "turtleClubMinecraftUsername";
 
+/* Username popup */
+const usernameOverlay = document.getElementById("usernameOverlay");
+const usernameForm = document.getElementById("usernameForm");
+const usernameInput = document.getElementById("minecraftUsername");
+const usernameError = document.getElementById("usernameError");
+
+try {
+  usernameInput.value =
+    localStorage.getItem(USERNAME_STORAGE_KEY) || "";
+} catch (error) {
+  console.warn("Could not load the saved username.", error);
+}
+
+usernameForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const username = usernameInput.value.trim();
+
+  if (!/^[A-Za-z0-9_]{3,16}$/.test(username)) {
+    usernameError.textContent =
+      "Enter a valid Java Edition username (3–16 letters, numbers, or underscores).";
+    usernameInput.focus();
+    return;
+  }
+
+  try {
+    localStorage.setItem(USERNAME_STORAGE_KEY, username);
+  } catch (error) {
+    console.warn("Could not save the username.", error);
+  }
+
+  usernameError.textContent = "";
+  usernameOverlay.hidden = true;
+});
+
+/* Basket */
 let basket = {};
 
 try {
@@ -883,6 +1004,7 @@ function renderBasket() {
   });
 }
 
+/* Add rank buttons */
 document.querySelectorAll(".add-button").forEach(function(button) {
   button.addEventListener("click", function() {
     addToBasket(
@@ -891,17 +1013,22 @@ document.querySelectorAll(".add-button").forEach(function(button) {
       Number(button.dataset.price)
     );
 
-    const originalText = "🛒 Add to Basket";
     button.textContent = "✓ Added!";
     button.classList.add("added");
 
     setTimeout(function() {
-      button.textContent = originalText;
+      button.textContent = "🛒 Add to Basket";
       button.classList.remove("added");
     }, 1100);
   });
 });
 
+/*
+ * Tebex checkout.
+ * The entered username is stored as basket custom data, but that alone
+ * does not authenticate a Minecraft account or guarantee delivery.
+ * Configure and test Tebex player authentication before taking payments.
+ */
 async function checkout() {
   const items = Object.values(basket);
 
@@ -909,10 +1036,19 @@ async function checkout() {
 
   if (
     !TEBEX_PUBLIC_TOKEN ||
-    TEBEX_PUBLIC_TOKEN === "155rr-cd5003a37445905713a65fc88300eaa93a66cffc"
+    TEBEX_PUBLIC_TOKEN === "cd5003a37445905713a65fc88300eaa93a66cffc"
   ) {
     basketMessage.textContent =
-      "The Tebex public token has not been added yet.";
+      "Add your Tebex public token to the store code first.";
+    return;
+  }
+
+  const username = localStorage.getItem(USERNAME_STORAGE_KEY);
+
+  if (!username) {
+    usernameOverlay.hidden = false;
+    basketMessage.textContent =
+      "Enter your Minecraft username before checkout.";
     return;
   }
 
@@ -929,7 +1065,10 @@ async function checkout() {
       },
       body: JSON.stringify({
         complete_url: window.location.href,
-        cancel_url: window.location.href
+        cancel_url: window.location.href,
+        custom: {
+          minecraft_username_entered: username
+        }
       })
     });
 
@@ -980,19 +1119,63 @@ async function checkout() {
       throw new Error("Tebex did not return a checkout link.");
     }
 
-    window.location.href = finalData.data.links.checkout;
+    /*
+     * This example stops before payment until the correct player
+     * authentication flow is configured. Do not treat the typed username
+     * as proof of ownership.
+     */
+    const authEndpoint =
+      API_BASE + "/baskets/" + encodeURIComponent(basketIdent) +
+      "/auth?returnUrl=" +
+      encodeURIComponent(finalData.data.links.checkout);
+
+    const authResponse = await fetch(authEndpoint, {
+      headers: { "Accept": "application/json" }
+    });
+
+    const authData = await authResponse.json();
+
+    if (!authResponse.ok) {
+      throw new Error(
+        authData.detail ||
+        "Tebex could not prepare player authentication."
+      );
+    }
+
+    const authOptions = Array.isArray(authData)
+      ? authData
+      : (Array.isArray(authData.data) ? authData.data : []);
+
+    if (authOptions.length === 0) {
+      throw new Error(
+        "Tebex returned no player authentication options. " +
+        "Check your Tebex integration settings before accepting purchases."
+      );
+    }
+
+    const minecraftAuth = authOptions.find(option =>
+      /minecraft|java/i.test(String(option.name || ""))
+    );
+
+    const chosenAuth = minecraftAuth ||
+      (authOptions.length === 1 ? authOptions[0] : null);
+
+    if (!chosenAuth || !chosenAuth.url) {
+      throw new Error(
+        "Could not identify the correct Minecraft authentication option. " +
+        "Check your Tebex integration settings."
+      );
+    }
+
+    window.location.href = chosenAuth.url;
 
   } catch (error) {
     console.error("Tebex checkout error:", error);
 
-    const message = error && error.message
-      ? error.message
-      : String(error);
-
     basketMessage.textContent =
-      message === "Load failed" || message === "Failed to fetch"
-        ? "Could not connect to Tebex. Please check your connection and try again. If this keeps happening, the browser may be blocking the Tebex request."
-        : message;
+      error && error.message
+        ? error.message
+        : "Checkout failed. Please try again.";
 
     checkoutButton.disabled = false;
     checkoutButton.textContent = "Continue to Checkout";
