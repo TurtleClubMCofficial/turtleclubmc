@@ -822,7 +822,7 @@ footer {
  * This is your Tebex public token.
  * Never put a Tebex secret key in website JavaScript.
  */
-const TEBEX_PUBLIC_TOKEN = "cd5003a37445905713a65fc88300eaa93a66cffc";
+const TEBEX_PUBLIC_TOKEN = "155rr-cd5003a37445905713a65fc88300eaa93a66cffc";
 
 const API_BASE =
   "https://headless.tebex.io/api/accounts/" +
@@ -1099,7 +1099,7 @@ async function checkout() {
    */
   if (
     !TEBEX_PUBLIC_TOKEN ||
-    TEBEX_PUBLIC_TOKEN === "cd5003a37445905713a65fc88300eaa93a66cffc"
+    TEBEX_PUBLIC_TOKEN === "155rr-cd5003a37445905713a65fc88300eaa93a66cffc"
   ) {
     basketMessage.textContent =
       "Tebex public token is missing.";
