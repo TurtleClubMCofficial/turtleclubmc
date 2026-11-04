@@ -306,6 +306,19 @@ footer {
   font-size: 12px !important;
 }
 
+/* Purchase type choices */
+.username-modal .purchase-choice {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 12px 0;
+}
+
+.username-modal .purchase-choice input {
+  width: auto;
+  accent-color: #75d99a;
+}
+
 /* Basket drawer */
 .basket-overlay {
   position: fixed;
@@ -488,13 +501,22 @@ footer {
 
     <h2 id="usernameTitle">🐢 Welcome to Turtle Club MC!</h2>
 
-    <p>
-      Enter your Minecraft Java Edition username before shopping.
-      Make sure it matches the account you intend to purchase for. 
-    </p>
+    <p>Choose who should receive everything in this basket.</p>
 
     <form id="usernameForm">
-      <label for="minecraftUsername">Minecraft Username</label>
+      <label class="purchase-choice">
+        <input type="radio" name="purchaseType" value="self" checked>
+        Buy for myself
+      </label>
+
+      <label class="purchase-choice">
+        <input type="radio" name="purchaseType" value="gift">
+        🎁 Gift to another player
+      </label>
+
+      <label for="minecraftUsername" id="usernameLabel">
+        Your Minecraft username
+      </label>
 
       <input
         type="text"
@@ -518,8 +540,8 @@ footer {
     </form>
 
     <p class="username-small-note">
-      Your username is remembered in this browser. This popup does not
-      independently verify your Minecraft account.
+      All items in this basket will be for this username. Double-check the spelling.
+      This popup does not independently verify account ownership.
     </p>
   </div>
 </div>
@@ -797,7 +819,7 @@ footer {
 <script>
 /*
  * IMPORTANT:
- * Set this to your actual Tebex public token.
+ * This is your Tebex public token.
  * Never put a Tebex secret key in website JavaScript.
  */
 const TEBEX_PUBLIC_TOKEN = "cd5003a37445905713a65fc88300eaa93a66cffc";
@@ -808,6 +830,7 @@ const API_BASE =
 
 const STORAGE_KEY = "turtleClubRankBasket";
 const USERNAME_STORAGE_KEY = "turtleClubMinecraftUsername";
+const PURCHASE_TYPE_KEY = "turtleClubPurchaseType";
 
 /* Username popup */
 const usernameOverlay = document.getElementById("usernameOverlay");
@@ -815,27 +838,62 @@ const usernameForm = document.getElementById("usernameForm");
 const usernameInput = document.getElementById("minecraftUsername");
 const usernameError = document.getElementById("usernameError");
 
+const purchaseTypeRadios =
+  document.querySelectorAll('input[name="purchaseType"]');
+
+const usernameLabel = document.getElementById("usernameLabel");
+
+function updateUsernamePrompt() {
+  const isGift =
+    document.querySelector('input[name="purchaseType"]:checked').value === "gift";
+
+  usernameLabel.textContent = isGift
+    ? "Recipient's Minecraft username"
+    : "Your Minecraft username";
+
+  usernameInput.placeholder = isGift
+    ? "FriendMinecraftName"
+    : "YourMinecraftName";
+}
+
+purchaseTypeRadios.forEach(radio => {
+  radio.addEventListener("change", updateUsernamePrompt);
+});
+
 try {
   usernameInput.value =
     localStorage.getItem(USERNAME_STORAGE_KEY) || "";
+
+  if (localStorage.getItem(PURCHASE_TYPE_KEY) === "gift") {
+    document.querySelector(
+      'input[name="purchaseType"][value="gift"]'
+    ).checked = true;
+  }
 } catch (error) {
-  console.warn("Could not load the saved username.", error);
+  console.warn("Could not load saved purchase details.", error);
 }
+
+updateUsernamePrompt();
 
 usernameForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
   const username = usernameInput.value.trim();
 
+  const purchaseType =
+    document.querySelector('input[name="purchaseType"]:checked').value;
+
   if (!/^[A-Za-z0-9_]{3,16}$/.test(username)) {
     usernameError.textContent =
       "Enter a valid Java Edition username (3–16 letters, numbers, or underscores).";
+
     usernameInput.focus();
     return;
   }
 
   try {
     localStorage.setItem(USERNAME_STORAGE_KEY, username);
+    localStorage.setItem(PURCHASE_TYPE_KEY, purchaseType);
   } catch (error) {
     console.warn("Could not save the username.", error);
   }
@@ -962,8 +1020,14 @@ function renderBasket() {
     price.className = "basket-item-price";
     price.textContent = "$" + item.price.toFixed(2);
 
+    const recipient = document.createElement("p");
+    recipient.className = "note";
+    recipient.textContent =
+      "For: " + (localStorage.getItem(USERNAME_STORAGE_KEY) || "Not selected");
+
     details.appendChild(name);
     details.appendChild(price);
+    details.appendChild(recipient);
     top.appendChild(details);
 
     const controls = document.createElement("div");
@@ -1023,32 +1087,31 @@ document.querySelectorAll(".add-button").forEach(function(button) {
   });
 });
 
-/*
- * Tebex checkout.
- * The entered username is stored as basket custom data, but that alone
- * does not authenticate a Minecraft account or guarantee delivery.
- * Configure and test Tebex player authentication before taking payments.
- */
+/* Tebex checkout */
 async function checkout() {
   const items = Object.values(basket);
 
   if (items.length === 0) return;
 
+  /*
+   * Corrected token check:
+   * Do not compare your real token against itself.
+   */
   if (
     !TEBEX_PUBLIC_TOKEN ||
-    TEBEX_PUBLIC_TOKEN === "cd5003a37445905713a65fc88300eaa93a66cffc"
+    TEBEX_PUBLIC_TOKEN === "YOUR_TEBEX_PUBLIC_TOKEN_HERE"
   ) {
     basketMessage.textContent =
-      "Failed to load";
+      "Tebex public token is missing.";
     return;
   }
 
   const username = localStorage.getItem(USERNAME_STORAGE_KEY);
 
-  if (!username) {
+  if (!username || !/^[A-Za-z0-9_]{3,16}$/.test(username)) {
     usernameOverlay.hidden = false;
     basketMessage.textContent =
-      "Enter your Minecraft username before checkout.";
+      "Enter a valid Minecraft username before checkout.";
     return;
   }
 
@@ -1067,7 +1130,9 @@ async function checkout() {
         complete_url: window.location.href,
         cancel_url: window.location.href,
         custom: {
-          minecraft_username_entered: username
+          minecraft_recipient_username: username,
+          purchase_type:
+            localStorage.getItem(PURCHASE_TYPE_KEY) || "self"
         }
       })
     });
@@ -1094,7 +1159,10 @@ async function checkout() {
           },
           body: JSON.stringify({
             package_id: item.id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            variable_data: {
+              username: username
+            }
           })
         }
       );
@@ -1119,11 +1187,6 @@ async function checkout() {
       throw new Error("Tebex did not return a checkout link.");
     }
 
-    /*
-     * This example stops before payment until the correct player
-     * authentication flow is configured. Do not treat the typed username
-     * as proof of ownership.
-     */
     const authEndpoint =
       API_BASE + "/baskets/" + encodeURIComponent(basketIdent) +
       "/auth?returnUrl=" +
