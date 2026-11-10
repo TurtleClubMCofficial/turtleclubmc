@@ -1097,14 +1097,11 @@ async function checkout() {
    * Corrected token check:
    * Do not compare your real token against itself.
    */
-  if (
-    !TEBEX_PUBLIC_TOKEN ||
-    TEBEX_PUBLIC_TOKEN === "155rr-cd5003a37445905713a65fc88300eaa93a66cffc"
-  ) {
-    basketMessage.textContent =
-      "Tebex public token is missing.";
-    return;
-  }
+  if (!TEBEX_PUBLIC_TOKEN) {
+  basketMessage.textContent =
+    "The Tebex public token is missing.";
+  return;
+}
 
   const username = localStorage.getItem(USERNAME_STORAGE_KEY);
 
