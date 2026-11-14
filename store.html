@@ -1040,6 +1040,7 @@ async function startCheckout() {
     });
 
     const authData = await readResponse(authResponse);
+    console.log("TEBEX AUTH RESPONSE:", authData);
 
     const authOptions = Array.isArray(authData)
       ? authData
