@@ -1041,6 +1041,7 @@ async function startCheckout() {
 
     const authData = await readResponse(authResponse);
     console.log("TEBEX AUTH RESPONSE:", authData);
+    alert(JSON.stringify(authData, null, 2));
 
     const authOptions = Array.isArray(authData)
       ? authData
